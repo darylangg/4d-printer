@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>{{ date }}</h1>
+  <h2>({{ day }})</h2>
+  <table class="big-prizes">
+    <tr>
+      {% for num in winners %}
+      <td>{{ num }}</td>
+      {% endfor %}
+    </tr>
+  </table>
+  <table class="starters">
+    {% for row in starters %}
+    <tr>
+      {% for num in row %}
+      <td>{{ num }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <table class="consolation">
+    {% for row in consolations %}
+    <tr>
+      {% for num in row %}
+      <td>{{ num }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+  <div class="footer">Printed on: {{ print_date }} </div>
+</body>
+</html>

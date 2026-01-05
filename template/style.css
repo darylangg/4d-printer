@@ -1,0 +1,56 @@
+@page {
+  size: A4;
+  margin: 0 auto;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td {
+    padding: 20px 20px;      /* 20px top/bottom, 10px left/right */
+    text-align: center;
+  }
+
+h1 {
+  font-size: 80px;
+  margin: 10px;
+}
+
+h2 {
+  font-size: 70px;
+  margin: 10px;
+}
+
+/* th, td {
+  padding: 8px;
+  text-align: center;
+} */
+
+.big-prizes {
+  font-size: 75px;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.starters {
+  font-size: 50px;
+  margin-bottom: 50px;
+}
+
+.consolation {
+  font-size: 50px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 20mm;   /* distance from bottom of page */
+  left: 20mm;     /* distance from left edge */
+  font-size: 12px;
+}
