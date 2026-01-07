@@ -4,8 +4,10 @@ from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader
 from datetime import date, datetime
 from weasyprint import HTML, CSS
+from dotenv import load_dotenv
 import requests
 import cups
+import os
 
 def scrape_results(url):
     html = requests.get(url).text
@@ -68,6 +70,31 @@ def print_pdf():
     )
     print("adding " + str(job_id) + " to print queue")
 
+def send_telegram_notification():
+    load_dotenv("./.env")
+
+    TOKEN = os.getenv("TELEGRAM_TOKEN")
+    CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+
+    conn = cups.Connection()
+    default_printer = conn.getDefault()
+    attrs = conn.getPrinterAttributes(default_printer)
+    ink_status = attrs.get("marker-levels")
+
+    today = date.today()
+    formatted_date = today.strftime("%Y%m%d")
+    MESSAGE = "Print job sent on " + formatted_date +"\nInk Status:" + str(ink_status)
+
+    printer_state = attrs.get("printer-state")
+    if printer_state != 3:
+        MESSAGE += "\nPrinter Issue: " + str(attrs.get("printer-state-reasons"))
+
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    payload = {"chat_id": CHAT_ID, "text": MESSAGE}
+
+    requests.post(url, data=payload)
+
 results = scrape_results(url)
 write_to_pdf(results, "template")
 print_pdf()
+send_telegram_notification()
